@@ -30,3 +30,16 @@ Template.main.events({
     event.target.time.value = '';
   }
 });
+
+Template.todo.events({
+  "click .toggle-checked": function(event) {
+    Todos.update(this._id, {
+      $set: {
+        checked: !this.checked
+      }
+    })
+  },
+  "click .delete": function(event) {
+    Todos.remove(this._id);
+  }
+});
