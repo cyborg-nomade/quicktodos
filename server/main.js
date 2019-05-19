@@ -1,8 +1,16 @@
+//external modules
 import {
   Meteor
 } from 'meteor/meteor';
+
+//app modules
 import '../lib/collections';
 
+Meteor.publish("todos", function todoPublication() {
+  return Todos.find();
+});
+
+//db operations
 Meteor.methods({
   //insert todo
   "todos.insert": function(text, time) {

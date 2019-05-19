@@ -17,6 +17,10 @@ Accounts.ui.config({
   passwordSignupFields: 'USERNAME_ONLY'
 });
 
+Template.main.onCreated(function mainOnCreate() {
+  Meteor.subscribe('todos');
+});
+
 //helpers
 Template.main.helpers({
   title: function() {
