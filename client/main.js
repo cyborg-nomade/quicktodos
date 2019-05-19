@@ -1,9 +1,20 @@
+//external modules
 import {
   Template
 } from 'meteor/templating';
+import {
+  Accounts
+} from 'meteor/accounts-base';
+
+//app modules
 import '../lib/collections';
 
+//views
 import './main.html';
+
+Accounts.ui.config({
+  passwordSignupFields: 'USERNAME_ONLY'
+});
 
 Template.main.helpers({
   title: function() {
@@ -23,7 +34,9 @@ Template.main.events({
     const time = event.target.time.value;
     Todos.insert({
       text,
-      time
+      time,
+      owner: Meteor.userId(),
+      username: Meteor.user().username
     });
 
     event.target.text.value = '';

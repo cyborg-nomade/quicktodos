@@ -8,12 +8,16 @@
 
 <template name="main">
   <header>
+    {{> loginButtons}}
+    <hr>
     <h1>{{title}}</h1>
-    <form action="" class="add-todo">
-      <input type="text" name="text" placeholder="Add To-do">
-      <input type="text" name="time" placeholder="Add Time">
-      <button type="submit" name="button">Add</button>
-    </form>
+    {{#if currentUser}}
+      <form action="" class="add-todo">
+        <input type="text" name="text" placeholder="Add To-do">
+        <input type="text" name="time" placeholder="Add Time">
+        <button type="submit" name="button">Add</button>
+      </form>
+    {{/if}}
   </header>
   <ul>
     {{#each todos}}
@@ -26,6 +30,6 @@
   <li class="{{#if checked}}checked{{/if}}">
     <button class="delete">&times;</button>
     <input type="checkbox" checked={{checked}} class="toggle-checked">
-    <strong>{{time}}: </strong>{{text}}
+    <strong>{{username}}: </strong>{{text}} <span>[{{time}}]</span>
   </li>
 </template>
