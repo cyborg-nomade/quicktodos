@@ -45,6 +45,8 @@ Meteor.methods({
   },
   //delete todo item
   "todos.remove": function(id) {
+    const todo = Todos.findOne(id);
+
     if (todo.owner !== this.userId) {
       throw new Meteor.Error('Unauthorized');
     }
