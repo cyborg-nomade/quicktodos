@@ -7,7 +7,17 @@ import {
 import '../lib/collections';
 
 Meteor.publish("todos", function todoPublication() {
-  return Todos.find();
+  return Todos.find({
+    $or: [{
+        private: {
+          $ne: true
+        }
+      },
+      {
+        owner: this.userId
+      }
+    ]
+  });
 });
 
 //db operations
@@ -35,6 +45,24 @@ Meteor.methods({
   },
   //delete todo item
   "todos.remove": function(id) {
+    if (todo.owner !== this.userId) {
+      throw new Meteor.Error('Unauthorized');
+    }
+
     Todos.remove(id);
+  },
+  //set todo to private
+  "todos.setPrivate": function(id, setToPrivate) {
+    const todo = Todos.findOne(id);
+
+    if (todo.owner !== this.userId) {
+      throw new Meteor.Error('Unauthorized');
+    }
+
+    Todos.update(id, {
+      $set: {
+        private: setToPrivate
+      }
+    });
   }
 });

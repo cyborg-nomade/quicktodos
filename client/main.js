@@ -32,6 +32,12 @@ Template.main.helpers({
   }
 });
 
+Template.todo.helpers({
+  isOwner: function() {
+    return this.owner === Meteor.userId();
+  }
+});
+
 //events
 Template.main.events({
   //insert todo
@@ -56,5 +62,8 @@ Template.todo.events({
   //delete todo item
   "click .delete": function(event) {
     Meteor.call('todos.remove', this._id)
+  },
+  "click .toggle-private": function() {
+    Meteor.call('todos.setPrivate', this._id, !this.private);
   }
 });
